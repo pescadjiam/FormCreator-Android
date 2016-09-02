@@ -10,6 +10,9 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 /**
  * Created by dengun on 02/09/16.
  */
@@ -42,18 +45,41 @@ public class FormCreator {
         }
     }
 
+    public HashMap<Integer, View> getViews() {
+        if (Builder.getViews().size() > 0) {
+            return Builder.getViews();
+        }
+
+        return new HashMap<Integer, View>();
+    }
+
+    public View getViewById(int id){
+        return getViews().get(id);
+    }
+
     public static class Builder implements View.OnClickListener{
 
         private LinearLayout parentView;
         private FormField[] fields;
         private Context context;
 
+        private static HashMap<Integer, View> views = new HashMap<>();
+        public static HashMap<Integer, View> getViews() {
+            return views;
+        }
+
+        private FormValidator formValidator;
         private View.OnClickListener clickListener;
         private IFormCreatorListener iFormCreatorListener;
 
         public Builder(Context context, LinearLayout parentView){
             this.parentView = parentView;
             this.context = context;
+        }
+
+        public FormValidator setFormValidator(FormValidator formValidator){
+            this.formValidator = formValidator;
+            return formValidator;
         }
 
         public Builder setFormCreatorListener(IFormCreatorListener iFormCreatorListener){
@@ -110,6 +136,7 @@ public class FormCreator {
                             }
 
                             parentView.addView(editText);
+                            views.put(field.getId(), editText);
                             break;
                         case BUTTON:
                             Button button = new Button(context);
@@ -133,6 +160,7 @@ public class FormCreator {
 
                             button.setOnClickListener(this);
                             parentView.addView(button);
+                            views.put(field.getId(), button);
                     }
                 }
             }
