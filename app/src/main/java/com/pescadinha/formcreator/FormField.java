@@ -1,17 +1,32 @@
 package com.pescadinha.formcreator;
 
+import android.graphics.Color;
+import android.widget.EditText;
+
 /**
  * Created by dengun on 02/09/16.
  */
 public class FormField {
 
-    public enum FormWidget {
-        EDIT_TEXT, CHECKBOX, BUTTON;
+    private FormCreator.FormWidget formWidget;
+    private FormFieldAttrs formFieldAttrs;
+    private int id;
+
+    public FormField(FormCreator.FormWidget formWidget, int id ,FormFieldAttrs formFieldAttrs){
+        this.formWidget = formWidget;
+        this.formFieldAttrs = formFieldAttrs;
+        this.id = id;
     }
 
-    private FormWidget widget;
+    public FormFieldAttrs getFormFieldAttrs() {
+        return formFieldAttrs;
+    }
 
-    public FormField(FormWidget widget){
-        this.widget = widget;
+    public FormCreator.FormWidget getFormWidget() {
+        return formWidget;
+    }
+
+    public int getId() {
+        return id;
     }
 }
